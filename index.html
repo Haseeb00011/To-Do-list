@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+<link rel="manifest" href="./site.webmanifest">
+</head>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #2371e7, #a70101);
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.box {
+    width: 95%;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    top: 0;
+    padding: 20px;
+    padding-bottom: 5px;
+}
+
+.box h1 {
+    color: #002765;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.box h1 img {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #af6f6f, #93b4e6);
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+#input-box {
+    flex: 1;
+    height: 40px;
+    width: 95%;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+#transition-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.7);
+    margin-right: 5px;
+}
+
+#transition-button:hover {
+    background: linear-gradient(45deg, #a70101, #007bff);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.9);
+}
+
+#transition-button:focus {
+    outline: none;
+    box-shadow: 0 0 20px #007bff;
+}
+
+ul {
+    display: flex;
+    flex-direction: column; /* Ensure vertical layout */
+    align-items: center;
+    justify-content: flex-start;  /* Align items to the start (top) */
+    margin-top: 20px;
+    padding: 10px;
+    list-style: none;
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+    flex-wrap: nowrap; /* Prevent wrapping to multiple columns */
+    overflow-y: auto;
+    max-height: 300px; /* Added max-height for vertical scroll */
+}
+
+ul li {
+    background: linear-gradient(45deg, #af6f6f, #93b4e6);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    width: 100%;
+    text-align: start;
+    color: #fff;
+    font-size: 1rem;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.7);
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+    padding-left: 45px;
+    word-wrap: break-word; /* handle long words */
+}
+
+ul li::before {
+    content: '';
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-image: url("../images/unchecked.png");
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+ul li.checked {
+    text-decoration: line-through;
+    color: #ccc;
+}
+
+ul li.checked::before {
+    background-image: url("../images/checked.png");
+}
+
+ul li span {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 35px;
+    color: #555;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+ul li span:hover {
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .container {
+        align-items: flex-start;
+        /* Align items to the start (top) on mobile */
+    }
+
+    .row {
+        padding: 5px;
+    }
+
+    .box {
+        width: 95%;
+        max-width: 600px;
+        top: 20px;
+        /* Push the box down from the top */
+        margin-bottom: 20px;
+        /* Add some margin below the box */
+        
+    padding-bottom: 5px;
+    }
+
+    .box h1 {
+        font-size: 1.6rem;
+    }
+
+    .box h1 img {
+        width: 35px;
+        height: 35px;
+    }
+
+    #input-box {
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    #transition-button {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+        margin-bottom: 5px;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+}
+</style>
+<body>
+    <section class="container">
+        <div class="box">
+            <h1>
+                To-Do List
+                <img src="../images/icon.png" alt="">
+            </h1>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Add a new task...">
+                <button id="transition-button">Add</button>
+            </div>
+            <ul id="list-container">
+                </ul>
+        </div>
+    </section>
+    <script >
+        const listContainer = document.getElementById("list-container");
+
+listContainer.addEventListener("click", function(event) {
+    if (event.target.tagName === "LI") {
+        event.target.classList.toggle("checked");
+     }
+});
+document.addEventListener('DOMContentLoaded', function() {
+    let listContainer = document.getElementById("list-container");
+    let inputbox = document.getElementById("input-box");
+    let addButton = document.getElementById("transition-button"); // Correct ID
+
+    if (addButton) {
+        addButton.addEventListener("click", AddTask);
+    }
+
+    if (listContainer) {
+        listContainer.addEventListener("click", function (event) {
+            if (event.target.tagName === "li") {
+                event.target.classList.toggle("checked");
+            }
+        });
+    }
+
+
+    function AddTask() {
+        if (inputbox.value === '') {
+            alert("Please enter a task!");
+        } else {
+            let li = document.createElement("li");
+            li.textContent = inputbox.value;
+            listContainer.appendChild(li);
+            inputbox.value = "";
+            let span = document.createElement("span");
+            span.innerHTML ="\u00d7"
+            li.appendChild(span);
+        }
+    }
+});
+listContainer.addEventListener("click", function(event) {
+    if (event.target.tagName === "SPAN") {
+        event.target.parentElement.remove();
+    }
+}, false);  
+
+    </script>
+</body>
+</html>
